@@ -34,6 +34,7 @@
 	(list '* (λ (u v du dv) (ttms_add (ttms_mul u dv) (ttms_mul du v))))
 	(list '- (λ (u du) (ttms_sub du)))
         (list '/ (λ (u v du dv) (ttms_sub (ttms_mul v du) (ttms_mul u dv))))
+        (list 'log (λ (u du) (ttms_div 1 du)))
 	(list 'sin (λ (u du) (ttms_mul (ttms-cos u) du)))
 	(list 'cos (λ (u du) (ttms_sub (ttms_mul (ttms-sin u) du))))
         (list 'exp (λ (u du) (u)))))
@@ -63,6 +64,11 @@
     (cond ((number? u) (- u))
 	  (else (list '- u)))))
 
+(define ttms_log
+  (λ (u)
+    (cond ((number? u) (log u))
+         (else (list 'log u)))))
+
 (define ttms_div
   (λ (u v)
     (cond ((and (number? u) (number? v)) (/ u v))
@@ -77,11 +83,14 @@
 
 
 ;;; test cases
-
 (d '(* (+ x 1) (+ x -1)))
 
 (d '(* x (* x (* x (* x x)))))
 
-(d '(+ (sin (+ x 6)) (* x 9))) ;;; --> (+ (cos (+ x 6)) 9)
+(d '(+ (sin (+ x 6)) (* x 9))) 
 
-(d '(+ (+ 1 9) (+ 3 8)))
+(d '(+ (+ 1 9) (+ 3 8))) ;;; --> 0
+
+(d '(log x)) 3  ;;; gives 1
+                ;;;       3
+

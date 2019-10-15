@@ -5,6 +5,7 @@
 ;;;  - Both ttms-eval and d should be table-driven.
 
 
+
 #lang racket
 (define d
   (λ (e)
@@ -80,3 +81,7 @@
 (d '(* (+ x 1) (+ x -1)))
 
 (d '(* x (* x (* x (* x x)))))
+
+(d '(+ (sin (+ x 6)) (* x 9))) ;;; --> (+ (cos (+ x 6)) 9)
+
+(d '(+ (+ 1 9) (+ 3 8)))

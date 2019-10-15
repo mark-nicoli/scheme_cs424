@@ -4,8 +4,6 @@
 ;;;    - Binary: +, *, / (x/y), expt (x^y)
 ;;;  - Both ttms-eval and d should be table-driven.
 
-
-
 #lang racket
 (define d
   (λ (e)
